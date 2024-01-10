@@ -6,31 +6,34 @@ services:
   mariadb:
     image: mariadb
     hostname: dj_mariadb
+    env_file:
+      - .db.env
     environment:
-      - MYSQL_ROOT_PASSWORD=domjudgebcc23
-      - MYSQL_USER=domjudgebcc23
-      - MYSQL_PASSWORD=domjudge_bcc23inglory
-      - MYSQL_DATABASE=djfcbcc23
     command: --max-connections=1000 --max-allowed-packet=512M
     volumes:
-      - /var/lib/mysql
+      - ./dbdata:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "healthcheck.sh", "--su-mysql", "--connect", "--innodb_initialized" ]
+      start_period: 1m
+      start_interval: 10s
+      interval: 1m
+      timeout: 5s
+      retries: 3
   domjudge:
     image: domjudge/domserver
     hostname: dj_domserver
+    env_file:
+      - .env
     environment:
       - CONTAINER_TIMEZONE=Asia/Jakarta
-      - MYSQL_HOST=dj_mariadb
-      - MYSQL_USER=domjudgebcc23
-      - MYSQL_DATABASE=djfcbcc23
-      - MYSQL_PASSWORD=domjudge_bcc23inglory
-      - MYSQL_ROOT_PASSWORD=domjudgebcc23
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
       - .:/domjudge:cached
     links:
       - mariadb:mariadb
     ports:
-      - 55555:80
+      - 80:80
     privileged: true
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
