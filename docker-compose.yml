@@ -1,14 +1,10 @@
 # docker-compose.yml
-
-version: '3.9'
-
 services:
   mariadb:
     image: mariadb
     hostname: dj_mariadb
     env_file:
       - .db.env
-    environment:
     command: --max-connections=1000 --max-allowed-packet=512M
     volumes:
       - ./dbdata:/var/lib/mysql
@@ -19,6 +15,7 @@ services:
       interval: 1m
       timeout: 5s
       retries: 3
+    restart: on-failure
   domjudge:
     image: domjudge/domserver
     hostname: dj_domserver
