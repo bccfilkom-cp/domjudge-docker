@@ -27,12 +27,13 @@ chmod +x prepare-contest-env.sh
 ```
 
 ## 📝 NOTES
-1. If the judgehost is running on different host than the domserver, then you can't instantly run the shell script since the script expects you to run judgehost on the same host as the domserver.
+1. Use ```host.docker.internal``` as ```DOMSERVER_IP_ADDR``` in shell script if you intend to run the judgehost in the same host as the domserver
 
-2. If judgehost failed to start and the container logs said auth failed, then you need to change judgehost account password in domjudge jury interface and restart the judgehost container
+2. If the judgehost is running on different host than the domserver, then you can't instantly run the shell script since the script expects you to run judgehost on the same host as the domserver.
 
-3. To reset admin's password, you can execute the bellow command
+3. If judgehost failed to start and the container logs said auth failed, then you need to change judgehost account password in domjudge jury interface and restart the judgehost container
+
+4. To reset admin's password, you can execute the bellow command
 ```zsh
 docker exec -it YOUR_DOMSERVER_CONTAINER_NAME /opt/domjudge/domserver/webapp/bin/console domjudge:reset-user-password admin
 ```
-
