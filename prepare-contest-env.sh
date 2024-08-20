@@ -8,8 +8,8 @@ NUM_OF_JUDGEHOSTS={num_of_judgehosts_needed}
 DOCKER_JUDGEHOST_NETWORK={docker_judgehost_network}
 
 # Start DOMserver Docker Compose
+# Assuming you are running the shell script in the same dir as docker compose configuration file
 echo 'Starting DOMserver Docker Compose...';
-cd $HOME/$DOMSERVER_COMPOSE_DIR;
 docker compose up -d;
 
 if [ "$(docker container ls | grep -c Up)" -ge 2 ]; then 
@@ -25,8 +25,8 @@ JD_PWD=$(docker exec -it domjudge-docker-domjudge-1 cat /opt/domjudge/domserver/
 | grep default \
 | awk '{print $NF}')
 
-echo "Judgehost Password: $JD_PWD"
-echo "If judgehost auth failed while registering endpoint, please update judgehost password in domjudge jury interface"
+echo "Judgehost Password: $JD_PWD";
+echo "If judgehost auth failed while registering endpoint, please update judgehost password in domjudge jury interface";
 
 # Remove existing container
 echo 'Removing existing DOMjudge judgehost daemon container...';
