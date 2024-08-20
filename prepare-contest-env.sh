@@ -1,11 +1,11 @@
 #!/bin/sh
 
 # Needed variables
-DOMSERVER_IP_ADDR=host.docker.internal
-DOMSERVER_PORT=80
-DOMSERVER_COMPOSE_DIR=Documents/Uni/Organisasi/BCC/projects/domjudge-docker
-NUM_OF_JUDGEHOSTS=2
-DOCKER_JUDGEHOST_NETWORK=judgehostnet
+DOMSERVER_IP_ADDR={domserver_ip_address}
+DOMSERVER_PORT={domserver_port}
+DOMSERVER_COMPOSE_DIR={domserver_compose_dir}
+NUM_OF_JUDGEHOSTS={num_of_judgehosts_needed}
+DOCKER_JUDGEHOST_NETWORK={docker_judgehost_network}
 
 # Start DOMserver Docker Compose
 echo 'Starting DOMserver Docker Compose...';
