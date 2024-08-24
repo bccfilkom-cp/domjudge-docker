@@ -20,13 +20,12 @@ else
 fi
 
 # Getting Judgehost Password
-echo 'Getting judgehost password from domserver restapi.secret';
+echo 'Getting judgehost password from domserver restapi.secret...';
 JD_PWD=$(docker exec -it domjudge-docker-domjudge-1 cat /opt/domjudge/domserver/etc/restapi.secret \
 | grep default \
 | awk '{print $NF}')
 
 echo "Judgehost Password: $JD_PWD";
-echo "If judgehost auth failed while registering endpoint, please update judgehost password in domjudge jury interface";
 
 # Remove existing container
 echo 'Removing existing DOMjudge judgehost daemon container...';
@@ -77,6 +76,8 @@ while [ $STAT_CODE -ne 200 ]; do
     STAT_CODE=$(curl http://${DOMSERVER_IP_ADDR}:${DOMSERVER_PORT}/public -o /dev/null \
         -s -I -w "%{http_code}\n");
 done
+
+echo "DOMserver ready!"
 
 echo 'Starting judgehosts container...';
 for ((i=0;i < $NUM_OF_JUDGEHOSTS; i++))
