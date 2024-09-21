@@ -1,0 +1,7 @@
+[vps]
+localhost:2205
+
+[vps:vars]
+ansible_user=vmaxx
+ansible_password=passwd123
+ansible_sudo_pass=passwd123

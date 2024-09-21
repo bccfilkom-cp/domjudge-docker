@@ -1,0 +1,79 @@
+- name: Docker Installation
+  hosts: vps
+  tasks:
+    - name: Uninstall old versions
+      become: true 
+      apt:
+        name: 
+          - docker.io
+          - docker-compose 
+          - docker-compose-v2
+          - docker-doc
+          - podman-docker
+        state: absent
+    - name: Install needed packages and deps
+      become: true
+      apt:
+        update_cache: yes 
+        name:
+          - apt-transport-https
+          - ca-certificates 
+          - curl
+          - python3-pip
+          - python3-setuptools
+          - virtualenv
+          - git
+          - software-properties-common
+        state: latest
+    - name: Download docker gpg key
+      become: true
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+    - name: Add docker repository
+      become: true
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu focal stable
+        state: present 
+    - name: Install docker packages
+      become: true
+      apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
+        state: latest 
+        update_cache: yes 
+    - name: Create docker group
+      become: true
+      group:
+        name: docker 
+        state: present
+    - name: Add user to group
+      become: true 
+      user:
+        name: "{{ ansible_user }}"
+        groups:
+          - docker 
+        append: true 
+    - meta: reset_connection
+    - name: Install docker module for python 
+      become: true
+      apt:
+        name: python3-docker
+        state: latest
+    - name: Enable docker systemd
+      become: true
+      systemd:
+        name: docker
+        enabled: yes
+        state: started
+    - name: Verify docker installation is successfull
+      community.docker.docker_container:
+        name: hello-world
+        image: hello-world
+        state: started
+        auto_remove: true
+  
