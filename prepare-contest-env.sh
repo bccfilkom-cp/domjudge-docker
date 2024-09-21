@@ -12,13 +12,6 @@ DOCKER_JUDGEHOST_NETWORK={docker_judgehost_network}
 echo 'Starting DOMserver Docker Compose...';
 docker compose up -d;
 
-if [ "$(docker container ls | grep -c Up)" -ge 2 ]; then 
-    echo 'DOMServer and MariaDB container is up already!';
-else 
-    echo 'Failed to start containers'; 
-    exit 1;
-fi
-
 # Getting Judgehost Password
 echo 'Getting judgehost password from domserver restapi.secret...';
 JD_PWD=$(docker exec -it domjudge-docker-domjudge-1 cat /opt/domjudge/domserver/etc/restapi.secret \
