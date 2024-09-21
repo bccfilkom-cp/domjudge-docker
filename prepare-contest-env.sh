@@ -1,9 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 
 # Needed variables
 DOMSERVER_IP_ADDR={domserver_ip_address}
 DOMSERVER_PORT={domserver_port}
-DOMSERVER_COMPOSE_DIR={domserver_compose_dir}
 NUM_OF_JUDGEHOSTS={num_of_judgehosts_needed}
 DOCKER_JUDGEHOST_NETWORK={docker_judgehost_network}
 
@@ -22,9 +21,9 @@ echo "Judgehost Password: $JD_PWD";
 
 # Remove existing container
 echo 'Removing existing DOMjudge judgehost daemon container...';
-for ((i=0;i < $NUM_OF_JUDGEHOSTS; i++))
+for ((i=0;i < NUM_OF_JUDGEHOSTS; i++))
 do
-    docker rm -f dj_judgehost-$i;
+    docker rm -f "dj_judgehost-$i";
 done 
 
 # Creating judgehost docker network
@@ -60,15 +59,15 @@ if [ "$DOMSERVER_IP_ADDR" == "host.docker.internal" ]; then
 	DOMSERVER_IP_ADDR=localhost
 fi 
 
-echo "Sending curl request to http://$DOMSERVER_IP_ADDR:$DOMSERVER_PORT/public"
+# echo "Sending curl request to http://$DOMSERVER_IP_ADDR:$DOMSERVER_PORT/public"
 
-STAT_CODE=$(curl http://${DOMSERVER_IP_ADDR}:${DOMSERVER_PORT}/public -o /dev/null \
-    -s -I -w "%{http_code}\n");
-while [ $STAT_CODE -ne 200 ]; do
-    sleep 1;
-    STAT_CODE=$(curl http://${DOMSERVER_IP_ADDR}:${DOMSERVER_PORT}/public -o /dev/null \
-        -s -I -w "%{http_code}\n");
-done
+# STAT_CODE=$(curl http://${DOMSERVER_IP_ADDR}:${DOMSERVER_PORT}/public -o /dev/null \
+#     -s -I -w "%{http_code}\n");
+# while [ $STAT_CODE -ne 200 ]; do
+#     sleep 1;
+#     STAT_CODE=$(curl http://${DOMSERVER_IP_ADDR}:${DOMSERVER_PORT}/public -o /dev/null \
+#         -s -I -w "%{http_code}\n");
+# done
 
 echo "DOMserver ready!"
 
