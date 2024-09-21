@@ -3,8 +3,11 @@ services:
   mariadb:
     image: mariadb
     hostname: dj_mariadb
-    env_file:
-      - .db.env
+    environment:
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
     command: --max-connections=1000 --max-allowed-packet=512M
     volumes:
       - ./dbdata:/var/lib/mysql
@@ -19,9 +22,12 @@ services:
   domjudge:
     image: domjudge/domserver
     hostname: dj_domserver
-    env_file:
-      - .env
     environment:
+      - MYSQL_HOST=${DB_HOST}
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
       - CONTAINER_TIMEZONE=Asia/Jakarta
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
