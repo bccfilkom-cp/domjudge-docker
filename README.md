@@ -5,6 +5,14 @@
 
 ## ⚙️ How to use
 
+There are two ways how to setup domjudge docker   
+[1. ✨ Basic Setup](#-basic-setup)   
+[2. 🔥 Ansible Setup](#-ansible-setup)
+
+### ✨ Basic Setup
+
+Basic setup needs you to install the docker already in the vps or the machine that you intend to host as the domserver and judgehost
+
 1. Clone this repository
 ```zsh
 https://github.com/bccfilkom-cp/domjudge-docker.git #https
@@ -31,6 +39,22 @@ chmod +x prepare-contest-env.sh
 ```zsh
 ./prepare-contest-env.sh
 ```
+### 🔥 Ansible Setup
+With ansible, everything is fast to the moon and it's all automated. Ansible setup also takes care docker installation for you!
+
+1. Make the ansible setup script to be executeable
+```zsh
+chmod +x ansible-setup.sh
+```
+2. Fill needed variables in [inventory file](./ansible/inventory)
+2. Run the ansible setup script
+```zsh
+./ansible-setup.sh
+```
+3. If you just need to clone and deploy without installing the docker, you can run playbook ```clone and deloy```
+```zsh
+ansible-playbook ansible/playbooks/01-clone-deploy.yml
+```
 
 ## 📝 NOTES
 1. Use ```host.docker.internal``` as ```DOMSERVER_IP_ADDR``` in shell script if you want to run the judgehost in the same host as the domserver
@@ -43,3 +67,4 @@ chmod +x prepare-contest-env.sh
 ```zsh
 docker exec -it YOUR_DOMSERVER_CONTAINER_NAME /opt/domjudge/domserver/webapp/bin/console domjudge:reset-user-password admin
 ```
+
