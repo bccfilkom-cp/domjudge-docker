@@ -1,0 +1,24 @@
+- name: Deploy DOMJudge
+  hosts: vps 
+  tasks:
+    - name: Clone bccfilkom-cp domjudge-docker configuration
+      git:
+        repo: https://github.com/bccfilkom-cp/domjudge-docker.git
+        clone: yes
+        update: yes 
+        dest: ~/domjudge-docker
+    - name: Create .env file with vars from inventory
+      copy:
+        content: |
+          DB_HOST="{{ domserver_db_host }}"
+          DB_USERNAME="{{ domserver_db_username }}"
+          DB_NAME="{{ domserver_db_name }}"
+          DB_PASSWORD="{{ domserver_db_password }}"
+          DB_ROOT_PASSWORD="{{ domserver_db_root_password }}"
+        dest: ~/domjudge-docker/.env
+        owner: "{{ ansible_user }}"
+    - name: Deploy the server
+      community.docker.docker_compose_v2:
+        project_src: ~/domjudge-docker
+        state: present
+        pull: always

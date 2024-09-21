@@ -1,5 +1,7 @@
 - name: Docker Installation
   hosts: vps
+  vars:
+    - cython_constraint: "{{ venv_path }}/bin/cython_constraint.txt"
   tasks:
     - name: Uninstall old versions
       become: true 
@@ -21,7 +23,7 @@
           - curl
           - python3-pip
           - python3-setuptools
-          - virtualenv
+          - python3-venv
           - git
           - software-properties-common
         state: latest
@@ -59,11 +61,19 @@
           - docker 
         append: true 
     - meta: reset_connection
+    - name: Create python venv 
+      command: python3 -m venv "{{ venv_path }}"
+      args:
+        creates: "{{ venv_path }}"
+    - name: Create cython constraint file
+      shell: echo "Cython<3" > "{{ cython_constraint }}"
+      args:
+        creates: "{{ cython_constraint }}"
     - name: Install docker module for python 
-      become: true
-      apt:
-        name: python3-docker
-        state: latest
+      pip:
+        name: docker-compose
+        virtualenv: "{{ venv_path }}"
+        extra_args: "-c {{ cython_constraint }}"
     - name: Enable docker systemd
       become: true
       systemd:
@@ -76,4 +86,3 @@
         image: hello-world
         state: started
         auto_remove: true
-  

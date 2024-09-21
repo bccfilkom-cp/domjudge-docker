@@ -1,7 +1,16 @@
 [vps]
-localhost:2205
+# put your vps ip address here
+# if ssh port is different than default, specify with ip_addr:your_port
 
 [vps:vars]
-ansible_user=vmaxx
-ansible_password=passwd123
-ansible_sudo_pass=passwd123
+ansible_user=#vps user
+ansible_password=#vps password
+ansible_sudo_pass=#vps password
+
+domserver_db_host=
+domserver_db_username=
+domserver_db_name=
+domserver_db_password=
+domserver_db_root_password=
+
+venv_path=~/.venv/ansible-env
