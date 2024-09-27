@@ -6,12 +6,13 @@
 ## ⚙️ How to use
 
 There are two ways how to setup domjudge docker   
-[1. ✨ Basic Setup](#-basic-setup)   
-[2. 🔥 Ansible Setup](#-ansible-setup)
+
+1. [✨ Basic Setup](#-basic-setup)   
+2. [🔥 Ansible Setup](#-ansible-setup)
 
 ### ✨ Basic Setup
 
-Basic setup needs you to install the docker already in the vps or the machine that you intend to host as the domserver and judgehost
+Basic setup needs you to install the docker already in the vps or the machine that you intend to host as the domserver and judgehost and also needs you to enable the cgroup already
 
 1. Clone this repository
 ```zsh
@@ -40,7 +41,7 @@ chmod +x prepare-contest-env.sh
 ./prepare-contest-env.sh
 ```
 ### 🔥 Ansible Setup
-With ansible, everything is fast to the moon and it's all automated. Ansible setup also takes care docker installation for you!
+With ansible, everything is fast to the moon and it's all automated. Ansible setup also takes care docker installation and enable cgroup for you!
 
 1. Make the ansible setup script to be executeable
 ```zsh
@@ -53,7 +54,7 @@ chmod +x ansible-setup.sh
 ```
 3. If you just need to clone and deploy without installing the docker, you can run playbook ```clone and deloy```
 ```zsh
-ansible-playbook ansible/playbooks/01-clone-deploy.yml
+ansible-playbook ansible/playbooks/02-clone-deploy.yml
 ```
 
 ## 📝 NOTES

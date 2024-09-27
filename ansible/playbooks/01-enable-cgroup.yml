@@ -1,0 +1,24 @@
+- name: Enable CgroupV2 
+  hosts: vps 
+  become: true
+  tasks:
+    - name: Ensure system hierarchy is present in grub
+      lineinfile:
+        path: /etc/default/grub
+        regexp: '^GRUB_CMDLINE_LINUX="(.*)"'
+        line: 'GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1 systemd.unified_cgroup_hierarchy=0"'
+        backrefs: yes 
+    - name: Update Grub Configuration
+      command: update-grub
+      when: ansible_facts['os_family'] == "Debian"
+    - name: Upgrade all packages on ubuntu
+      apt:
+        upgrade: dist 
+        update_cache: yes
+      when: ansible_facts['os_family'] == "Debian"
+    - name: Reboot the system 
+      reboot:
+        msg: "Rebooting to apply GRUB changes"
+        reboot_timeout: 60
+
+

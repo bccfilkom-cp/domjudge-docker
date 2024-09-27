@@ -10,7 +10,7 @@
         clone: yes
         update: yes 
         force: yes
-        dest: ~/"{{ clone_dir }}"
+        dest: "{{ clone_dir }}"
     - name: Create .env file with vars from inventory
       copy:
         content: |
@@ -31,4 +31,5 @@
     - name: Deploy the server using prep contest script
       shell: |
         chmod +x ~/domjudge-docker/prepare-contest-env.sh
-        ~/domjudge-docker/prepare-contest-env.sh
+        cd ~/domjudge-docker
+        ./prepare-contest-env.sh

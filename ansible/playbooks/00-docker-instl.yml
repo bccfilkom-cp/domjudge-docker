@@ -1,7 +1,7 @@
 - name: Docker Installation
   hosts: vps
   vars:
-    - cython_constraint: "{{ venv_path }}/bin/cython_constraint.txt"
+    - cython_constraint: "cython_constraint.txt"
   tasks:
     - name: Uninstall old versions
       become: true 
@@ -70,10 +70,8 @@
       args:
         creates: "{{ cython_constraint }}"
     - name: Install docker module for python 
-      pip:
-        name: docker-compose
-        virtualenv: "{{ venv_path }}"
-        extra_args: "-c {{ cython_constraint }}"
+      shell: |
+        PIP_CONSTRAINT={{ cython_constraint }} {{ venv_path }}/bin/pip3 install docker-compose
     - name: Enable docker systemd
       become: true
       systemd:
