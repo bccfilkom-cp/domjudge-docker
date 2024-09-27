@@ -1,6 +1,7 @@
 # docker-compose.yml
 services:
   mariadb:
+    container_name: domjudge-db
     image: mariadb
     hostname: dj_mariadb
     environment:
@@ -20,6 +21,7 @@ services:
       retries: 3
     restart: on-failure
   domjudge:
+    container_name: domjudge-srv
     image: domjudge/domserver
     hostname: dj_domserver
     environment:
@@ -37,6 +39,7 @@ services:
     ports:
       - 80:80
     privileged: true
+    restart: on-failure
     depends_on:
       mariadb:
         condition: service_healthy

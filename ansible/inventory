@@ -16,6 +16,7 @@ domserver_db_root_password=
 
 # needed variables in prepare contest shell script
 domserver_ip_address=
+domserver_ip_curl=
 domserver_port=
 num_of_judgehosts_needed=
 docker_judgehost_network=
