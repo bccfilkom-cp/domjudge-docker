@@ -1,25 +1,24 @@
 [vps]
-# put vps ip addresses in here
-# if the vps is using diff ssh port than default, write it with ip_addrr:ssh_port
+localhost:2205
 
 [vps:vars]
-ansible_user=
-ansible_password=
-ansible_sudo_pass=
+ansible_user=vmaxx
+ansible_password=passwd123
+ansible_sudo_pass=passwd123
 
 # variables in .env
-domserver_db_host=
-domserver_db_username=
-domserver_db_name=
-domserver_db_password=
-domserver_db_root_password=
+domserver_db_host=mariadb
+domserver_db_username=root
+domserver_db_name=domjudge
+domserver_db_password=root
+domserver_db_root_password=root
 
 # needed variables in prepare contest shell script
-domserver_ip_address=
-domserver_ip_curl=
-domserver_port=
-num_of_judgehosts_needed=
-docker_judgehost_network=
+domserver_ip_address=host.docker.internal
+domserver_ip_curl=localhost
+domserver_port=80
+num_of_judgehosts_needed=2
+docker_judgehost_network=judge-net
 
 # vps venv path
-venv_path=
+venv_path=.venv/ansible
