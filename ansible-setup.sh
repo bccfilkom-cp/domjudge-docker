@@ -17,12 +17,5 @@ ansible-playbook ansible/playbooks/00-docker-instl.yml
 echo 'Executing playbook enable-cgroup';
 ansible-playbook ansible/playbooks/01-enable-cgroup.yml
 
-echo 'Waiting for the server to rebooting';
-for i in {1..5}; do
-    echo -n "."
-    sleep 1
-done
-
 echo 'Executing playbook clone-deploy';
-
 ansible-playbook ansible/playbooks/02-clone-deploy.yml
