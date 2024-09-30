@@ -18,4 +18,4 @@ echo 'Executing playbook enable-cgroup';
 ansible-playbook ansible/playbooks/01-enable-cgroup.yml
 
 echo 'Executing playbook clone-deploy';
-ansible-playbook ansible/playbooks/02-clone-deploy.yml -v | grep "New password for admin"
+ansible-playbook ansible/playbooks/02-clone-deploy.yml -v | tee >(grep "New password for admin")

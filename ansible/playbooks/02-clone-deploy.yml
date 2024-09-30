@@ -1,7 +1,7 @@
 - name: Deploy DOMJudge
   hosts: vps 
   vars:
-    - clone_dir: domjudge-docker
+    - clone_dir: "domjudge-docker"
     - shell_path: "{{ clone_dir }}/prepare-contest-env.sh"
   tasks:
     - name: Clone bccfilkom-cp domjudge-docker configuration
