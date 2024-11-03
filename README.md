@@ -52,7 +52,7 @@ chmod +x ansible-setup.sh
 ```zsh
 ./ansible-setup.sh
 ```
-3. If you just need to clone and deploy without installing the docker, you can run playbook ```clone and deploy```
+3. If you just need to clone and deploy without installing the docker, you can run playbook ```clone and dep    loy```
 ```zsh
 ansible-playbook ansible/playbooks/02-clone-deploy.yml
 ```
