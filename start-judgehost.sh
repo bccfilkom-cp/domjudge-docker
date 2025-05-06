@@ -1,12 +1,14 @@
 #!/bin/bash
 
+# Needed variables
 DOMSERVER_IP_ADDR=
 DOMSERVER_PORT=
-NUM_OF_JUDGEHOSTS=                                                                                                                            
+NUM_OF_JUDGEHOSTS=                                                                                                              
 DOCKER_JUDGEHOST_NETWORK=
-JD_USER=
-JD_PWD=
+JUDGE_USER=
+JUDGE_PASS=
 
+# Run this on separate host than DOMserver
 for ((i=0;i < $NUM_OF_JUDGEHOSTS; i++))
 do
     echo "Creating dj_judgehost-$i"
@@ -19,8 +21,8 @@ do
     -e DAEMON_ID=$i --network "$DOCKER_JUDGEHOST_NETWORK" \
     -e CONTAINER_TIMEZONE=Asia/Jakarta \
     -e DOMSERVER_BASEURL=http://"$DOMSERVER_IP_ADDR":"$DOMSERVER_PORT"/ \
-    -e JUDGEDAEMON_USERNAME="$JD_USER" \
-    -e JUDGEDAEMON_PASSWORD="$JD_PWD"\
+    -e JUDGEDAEMON_USERNAME="$JUDGE_USER" \
+    -e JUDGEDAEMON_PASSWORD="$JUDGE_PASS"\
     domjudge/judgehost
 
     docker start dj_judgehost-$i;

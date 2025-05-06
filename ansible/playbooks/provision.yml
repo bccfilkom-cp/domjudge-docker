@@ -1,0 +1,8 @@
+- hosts: server
+  gather_facts: false
+  become: true
+  roles:
+    - name: python-install
+    - name: docker-install
+    - name: ufw-setup
+    - name: cgroup-enable

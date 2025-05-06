@@ -1,0 +1,7 @@
+all:
+  hosts:
+    server:
+      ansible_host: 127.0.0.1       # Replace with the actual IP address
+      ansible_user: user            # Replace with the actual username
+      ansible_password: password    # Replace with the actual password
+      ansible_sudo_pass: password   # Replace with the actual sudo password

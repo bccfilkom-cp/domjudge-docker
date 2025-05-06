@@ -1,0 +1,7 @@
+- name: Clone bccfilkom-cp domjudge-docker configuration
+  git:
+    repo: https://github.com/bccfilkom-cp/domjudge-docker.git
+    clone: yes
+    update: yes 
+    force: yes
+    dest: ~/domjudge-docker

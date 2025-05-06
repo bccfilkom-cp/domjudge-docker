@@ -1,0 +1,12 @@
+domserver_db_host: dj_mariadb # This is the name of the MariaDB container host
+domserver_db_username: domjudge # <----- CHANGE THIS DB USERNAME
+domserver_db_name: domserverdb # <----- CHANGE THIS DB NAME
+domserver_db_password: dompassword # <----- CHANGE THIS DB PASSWORD
+domserver_db_root_password: dompassword # <----- CHANGE THIS DB ROOT PASSWORD
+
+# needed variables in prepare contest shell script
+domserver_ip_address: host.docker.internal  # <---- Keep it as it is 
+domserver_ip_curl: localhost  # <----- CHANGE THIS TO THE IP ADDRESS OF YOUR DOMJUDGE SERVER
+domserver_port: 80 # <----- Optional but can change the port of the domjudge server
+num_of_judgehosts_needed: 4 # <----- Fill this field as needed
+docker_judgehost_network: dockjudgenet # <---- Optional but can change this

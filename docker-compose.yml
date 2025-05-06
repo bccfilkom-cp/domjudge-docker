@@ -11,7 +11,7 @@ services:
       - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
     command: --max-connections=1000 --max-allowed-packet=512M
     volumes:
-      - ./dbdata:/var/lib/mysql
+      - domjudgedata:/var/lib/mysql
     healthcheck:
       test: [ "CMD", "healthcheck.sh", "--su-mysql", "--connect", "--innodb_initialized" ]
       start_period: 1m
@@ -43,3 +43,7 @@ services:
     depends_on:
       mariadb:
         condition: service_healthy
+
+volumes:
+  domjudgedata:
+    driver: local
