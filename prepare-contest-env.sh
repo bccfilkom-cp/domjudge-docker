@@ -21,7 +21,7 @@ start_domserver() {
 
     # Waiting for DOMServer
     echo 'Waiting for DOMServer...';
-    sleep 2
+    sleep 10
 
     # Resetting Admin Password
     echo 'Reseting admin password...';
