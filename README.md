@@ -50,15 +50,18 @@ With ansible, everything is fast to the moon and it's all automated. Ansible set
 chmod +x ansible-setup.sh
 ```
 2. Fill needed variables in [inventory files](./ansible/inventory) including [hosts](./ansible/inventory/hosts.yaml) and [vars](./ansible/inventory/vars.yaml)
-2. Run the ansible setup script
+3. Run the ansible setup script
 ```zsh
 ./ansible-setup.sh
 ```
-3. If you just need to clone and deploy without installing the docker, you can run [deploy playbook](./ansible/playbooks/deploy.yml)
+4. If you just need to clone and deploy without installing the docker, you can run [deploy playbook](./ansible/playbooks/deploy.yml)
 ```zsh
 cd ansible
 ansible-playbook -e @inventory/vars.yaml playbooks/deploy.yml
 ```
+
+5. SSH to your VM and go to `~/domjudge-docker/output.txt` to see the shell process result. You can also find the admin password in the file. Make sure to delete the file after.
+
 
 ### 💥 Spawn Judgehost Container
 To spawn Judgehost containers in different host than the DOMserver host, you can look up [start-judgehost.sh](./start-judgehost.sh) shell script, fill the needed variables and execute it in your local machine or separate machine than the DOMserver machine.
