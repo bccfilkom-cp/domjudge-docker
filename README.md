@@ -1,18 +1,20 @@
 <div align="center">
 <img src="https://www.domjudge.org/DOMjudgelogo.svg" width="100px" style="background-color:white;">
-<h1>DOMJudge Docker Config</h1>
+<h1>DOMJudge Docker Deployment</h1>
 </div>
+
+DOMJudge Docker Deployment made easy for ubuntu distro.
 
 ## ⚙️ How to use
 
 There are two ways how to setup domjudge docker   
 
-1. [✨ Basic Setup](#-basic-setup)   
-2. [🔥 Ansible Setup](#-ansible-setup)
+#### 1. [✨ Basic Setup](#-basic-setup)   
+#### 2. [🔥 Ansible Setup](#-ansible-setup)
 
 ### ✨ Basic Setup
 
-Basic setup needs you to install the docker already in the vps or the machine that you intend to host as the domserver and judgehost and also needs you to enable the cgroup already
+Basic setup needs you to install the docker already in the VM that you intend to host as the domserver and judgehost. It expects you to already enable cgroupv2
 
 1. Clone this repository
 ```zsh
@@ -41,23 +43,30 @@ chmod +x prepare-contest-env.sh
 ./prepare-contest-env.sh
 ```
 ### 🔥 Ansible Setup
-With ansible, everything is fast to the moon and it's all automated. Ansible setup also takes care docker installation and enable cgroup for you!
+With ansible, everything is fast to the moon and it's all automated. Ansible setup also takes care docker installation and enable cgroup for you! Note that ansible expects your VM OS to be ubuntu.
 
 1. Make the ansible setup script to be executeable
 ```zsh
 chmod +x ansible-setup.sh
 ```
-2. Fill needed variables in [inventory file](./ansible/inventory)
+2. Fill needed variables in [inventory files](./ansible/inventory) including [hosts](./ansible/inventory/hosts.yaml) and [vars](./ansible/inventory/vars.yaml)
 2. Run the ansible setup script
 ```zsh
 ./ansible-setup.sh
 ```
-3. If you just need to clone and deploy without installing the docker, you can run playbook ```clone and dep    loy```
+3. If you just need to clone and deploy without installing the docker, you can run [deploy playbook](./ansible/playbooks/deploy.yml)
 ```zsh
-ansible-playbook ansible/playbooks/02-clone-deploy.yml
+cd ansible
+ansible-playbook -e @inventory/vars.yaml playbooks/deploy.yml
 ```
 
+### 💥 Spawn Judgehost Container
+To spawn Judgehost containers in different host than the DOMserver host, you can look up [start-judgehost.sh](./start-judgehost.sh) shell script, fill the needed variables and execute it in your local machine or separate machine than the DOMserver machine.
+
 ## 📝 NOTES
+
+Please read this notes for further information regarding to deploy DOMJudge docker.
+
 1. Use ```host.docker.internal``` as ```DOMSERVER_IP_ADDR``` in shell script if you want to run the judgehost in the same host as the domserver
 
 2. If the judgehost is running on different host than the domserver, then you can't instantly run the shell script since the script expects you to run judgehost on the same host as the domserver.
@@ -66,6 +75,10 @@ ansible-playbook ansible/playbooks/02-clone-deploy.yml
 
 4. To reset admin's password, you can execute the bellow command
 ```zsh
-docker exec -it YOUR_DOMSERVER_CONTAINER_NAME /opt/domjudge/domserver/webapp/bin/console domjudge:reset-user-password admin
+docker exec -it domjudge-srv /opt/domjudge/domserver/webapp/bin/console domjudge:reset-user-password admin
 ```
+
+## License
+
+This project is licensed under the MIT License. See the [`LICENSE`](./LICENSE) file for details.
 
