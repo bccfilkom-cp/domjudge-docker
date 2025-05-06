@@ -1,0 +1,19 @@
+- name: Create .env file with vars from inventory
+  copy:
+    content: |
+      DB_HOST="{{ domserver_db_host }}"
+      DB_USERNAME="{{ domserver_db_username }}"
+      DB_NAME="{{ domserver_db_name }}"
+      DB_PASSWORD="{{ domserver_db_password }}"
+      DB_ROOT_PASSWORD="{{ domserver_db_root_password }}"
+    dest: ~/domjudge-docker/.env
+    owner: "{{ ansible_user }}"
+- name: Filling needed variables in prepare script
+  vars:
+    file_shell_path: "/home/{{ ansible_user }}/domjudge-docker/prepare-contest-env.sh"
+  shell: |
+    sed -i 's/{domserver_ip_address}/{{ domserver_ip_address }}/g' "{{ file_shell_path }}"
+    sed -i 's/{domserver_ip_curl}/{{ domserver_ip_curl }}/g' "{{ file_shell_path }}"
+    sed -i 's/{domserver_port}/{{ domserver_port }}/g' "{{ file_shell_path }}"
+    sed -i 's/{num_of_judgehosts_needed}/{{ num_of_judgehosts_needed }}/g' "{{ file_shell_path }}"
+    sed -i 's/{docker_judgehost_network}/{{ docker_judgehost_network }}/g' "{{ file_shell_path }}"  

@@ -1,0 +1,6 @@
+- hosts: server
+  gather_facts: false
+  roles:
+    - name: clone-repo
+    - name: setup-env
+    - name: deploy-domjudge

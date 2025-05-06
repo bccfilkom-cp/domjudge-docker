@@ -1,0 +1,15 @@
+- name: Ensure output result file exists
+  file: 
+    path: "/home/{{ ansible_user }}/domjudge-docker/output.txt"
+    state: touch
+    mode: 0644
+
+- name: Deploy the server using prep contest script
+  shell: |
+    cd ~/domjudge-docker
+    chmod +x ./prepare-contest-env.sh
+    ./prepare-contest-env.sh > ./output.txt 2>&1
+  register: out
+
+- name: Check shell output
+  debug: var=out.stdout_lines
