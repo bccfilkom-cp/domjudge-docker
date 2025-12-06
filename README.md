@@ -83,5 +83,5 @@ docker exec -it domjudge-srv /opt/domjudge/domserver/webapp/bin/console domjudge
 
 ## License
 
-This project is licensed under the MIT License. See the [`LICENSE`](./LICENSE) file for details.
+This project is licensed under the GNU-GPL3 License. See the [`LICENSE`](./LICENSE) file for details.
 
